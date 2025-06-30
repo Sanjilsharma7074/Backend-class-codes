@@ -1,0 +1,17 @@
+1. The most important thing in package.json is dependencies, which install new packages and their keep their versions up to date.
+2. Node modules folder store express and its functionalities on local machine.
+3. Node js is a framework , library, language - it is a runtime enviroment for JS.
+4. npm init cmd is used to setup an enviroment of node js for running JS.
+5. npm init -y -> skip the extra details and automatically fills the required one.
+6. package.json -> it tracks your app's 
+    - meta info
+    - installed packages
+    - custom scripts
+7. dependencies -> store external packages names and their versions. Which we install explicitly in order to run the application.
+8. nodemodules - stores all the installed packages in the local machine.
+9. Only one server can run on a single port at a time on the same machine.\
+10. Term	        Meaning
+    localhost	    A special name for your own computer
+    Mapped to	    IP address 127.0.0.1 (loopback address)
+    Used for	T   esting servers locally, development, etc.
+    Mapping file	/etc/hosts or C:\Windows\System32\drivers\etc\hosts
