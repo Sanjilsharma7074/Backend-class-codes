@@ -1,8 +1,78 @@
 #API 
 
 1. Frontend connects to backend through API and backend connectes to DB through ORMs.
+
 2. Frontend sends a request to backend, backend needs some data to perform its operation on, so it asks for retrieval of some data from DB, until then the process in the backend is stuck, and continues only when some data uis sent back to the backend, and backend sends back a response to the frontend.
+
 3. For 1 request send to backend, we'll get only one response back to the frontend.
+
 4. socket.io is another way of communication besides API.
+
 5. () => {} - This is an arrow function, used as a callback function in app.listen();
+
 6. We have hit an API at home route, absence of any route in it will display a Cannot /GET error on the browser.
+
+7. The browser always and only sends GET request, so in order to build a POST API we use postman to test the POST API.
+
+8. API - Every request sent to you browser or backend is an API
+       - To create an API there are 2 criterias
+          1. Type - GET, POST, PUT, PATCH, DELETE
+
+          2. path - HOME route was a path, similarly we can create multiple paths : eg- '/' , '/users' , '/all/users' .
+       - For a single path we can create 5 different APIs.
+
+            1. app.get('/users') - first API : Used to get/retrieve data from backend. It is the fastest API and give us the fastest response in comparison to other APIs.Cannot send secure data to the backend while the others can.
+            
+            2. app.post('/users') - second API : Used to send data from frontend to  backend, gives us a secure way(body) to do the same so that the data url could not be visible on the browser. Data is sent for the entry.
+            
+            3. app.put('/users') - third API : To update a data in backend , can also send the data but it is not its major functionaity.
+            
+            4. app.patch('/users') - fourth API : To update data partially in the backend, for a user i just want to change his username, hence we have updated just some part of the data.
+            
+            5. app.delete('/users') - fifth API : To delete a data in backend.
+
+            All these are just the concepts to help us differnetiate between crud operations. Any of it can use any functionality in the code.
+
+9. A request send from frontend to backend returns with a response from backend to frontend. Bothe req and res are objects.
+
+  req : keys - body, headers(secure : not visivle at URL), 
+        Query Params, params (visible in URL), 
+        frontend url, userID.
+
+       req does not have any methods.
+
+  res : Have different keys, which further contains different methods
+        eg - send : can only send a string data 
+             status : 2 Types - client side error(400 errors), server side errors(500 errors) {learn the major 8-10}
+                      404 - API you hit from frontend to backend does not exist, wither you have given the wrong path or an invalid path.
+             json : javascript object notation - array of objects, objects of arrays, or objects of objects
+                    Used to send data on the front end.
+                    The data that has been sent from the backend to frontend can be displayed with the help of json.
+                    Array is an object in JS, indexes are its key, so we can also send an array through json.
+                    It is a somewhat similar structure like JS object.
+
+        - response also perform rendering and redirecting. 
+
+10. postman : parent folder is called connection. For different APIs we create different folders.
+            - Auth in postman is a part of headers. We'll study 
+            - We'll right now focus on body , we can send data in different forms through body.
+                Form-data : when data is sent in form.
+                x-form : when form is filled through js.
+                we'll use raw to send data.
+
+11. we could have sent multiple forms of data through req.body,express get confused how to process different data, so we have to tell the express what kind of data are we using, to tell the express that we have used json data we used app.use(express.json()); middleware, when a request is sent to the backend it turns into string, in order to convert it back to the json data we use the above given middleware, we use app.use(express.urlencoded({ extended: true })); middleware to tell the express that we have sent back a form data.
+
+12. req is converted to the smallest unit (binary), when sent from frontend to backend.
+
+13. [
+  app.get('/',(req,res) => {
+  res.send("Server is Live.")
+  const result = {
+    name : "nothing",
+    work : null
+  }
+  res.json(result);//object is passed into res.json either made through a var or directly
+})
+]
+
+cannot send 2 responses for one request
