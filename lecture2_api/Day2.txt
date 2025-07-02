@@ -1,0 +1,8 @@
+#API 
+
+1. Frontend connects to backend through API and backend connectes to DB through ORMs.
+2. Frontend sends a request to backend, backend needs some data to perform its operation on, so it asks for retrieval of some data from DB, until then the process in the backend is stuck, and continues only when some data uis sent back to the backend, and backend sends back a response to the frontend.
+3. For 1 request send to backend, we'll get only one response back to the frontend.
+4. socket.io is another way of communication besides API.
+5. () => {} - This is an arrow function, used as a callback function in app.listen();
+6. We have hit an API at home route, absence of any route in it will display a Cannot /GET error on the browser.
