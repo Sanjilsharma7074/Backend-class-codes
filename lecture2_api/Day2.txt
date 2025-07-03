@@ -76,3 +76,69 @@
 ]
 
 cannot send 2 responses for one request
+
+14. What is the difference between res.send() and res.end()?
+
+    res.send() - built-in in express
+               - automatically sends a response and end it.
+               - It sets the headers, format the response and closes the connection in one go that too automatically.
+                    res.send("Hello World");
+                    🔍 This does 3 things:
+
+                            Sets the header: Content-Type: text/html (automatically)
+
+                            Sends "Hello World" to the browser
+
+                            Ends the response (you don’t need res.end())
+    res.end() -  What is res.end()?
+                      - Comes from Node.js core (low level)
+
+                      - Doesn’t do anything automatically
+
+                        You must:
+
+                            Set headers (like Content-Type)
+
+                            Write content with res.write()
+
+                            End with res.end()
+
+                        ✅ Example:
+                        
+                        res.write("Hello");
+                        res.end(" World");
+                        This does:
+
+                            Sends "Hello"
+
+                            Then ends the response with " World"
+
+                            No automatic headers, no formatting
+15. “formats the response” means:
+- Taking what you give (string, object, array) and converting it to a format the browser understands — like plain text, HTML, or JSON.
+- It means Express automatically adjusts your response data to a proper format (like plain text, JSON, or HTML), based on what you send and what the browser/client expects.
+
+res.send() automatically formats the response:Converts objects to JSON (JSON.stringify)
+  Sets headers (Content-Type: application/json)
+  Ends the response
+  
+res.end() is manual:
+  You must stringify the data
+  Set headers yourself
+  Call res.end() explicitly
+
+Example Comparison
+Using res.send() (Express-way — automatic):
+
+res.send({ user: "sanjil" });
+Sends to client:
+
+{ "user": "sanjil" }
+
+----------------------------
+
+With header:Using res.end() (Manual - Node.js way):
+
+res.setHeader("Content-Type", "application/json");
+res.write(JSON.stringify({ user: "sanjil" }));
+res.end();
