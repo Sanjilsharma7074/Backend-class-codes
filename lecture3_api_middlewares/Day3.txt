@@ -3,7 +3,7 @@
 
 2. Query params will be sent as string and hence there would be no need to tell anyone that a query param is being sent.
 
-    - I sent a number as a query param but i received a number instead -  { name: 'sanjil', number: '2025' }
+    - I sent a number as a query param but i received a string instead -  { name: 'sanjil', number: '2025' }
 
     - req.query is an object and we are sending key:value pairs for the same.
 
@@ -11,7 +11,7 @@
 
     - query params are to be sent through postman under query params section.
 
-    - To access a key through any object we can also use destructuring(here, object is req.query and and key is name)
+    - To access a key through any object we can also use destructuring(here, object is req.query and key is name)
 
         - req.query is an object with 2 keys:value pairs, name and number -> const{name} = req.query; here name is a var
 
@@ -34,14 +34,14 @@
 4. usually const is used to declare vars and arrays when we dont want to make any changes to the once initlised vars and arrays
 
 5. params - used for dynamic routing -> You wish to use a single API and want to implement multiple functionaity in it.
-          - to delete a used we must send an unique ID of  the user so that my backend can tell to the DB which user is to be deleted 
+          - to delete a user we must send an unique ID of  the user so that my backend can tell to the DB which user is to be deleted 
           - To send multiple IDs in a single API we'll use the concept of params in a practical way.
           - req.params is an object and in order to retrieve its key 'id' we can use destructuring on it , again !
           - Just like query param, you can only send string to it, even if you send an integer, in the final output it will displayed as a string only.
-          - in the query param, we had to write both key and value but params jus displays the value and the key will just be known to the backend in this scenario. This makes the params a little secure in comparison to query params.
+          - in the query param, we had to write both key and value but params just displays the value and the key will just be known to the backend in this scenario. This makes the params a little secure in comparison to query params.
           - we can send multiple params to it, req.params can have as many number of keys.
       
-6. Middlewares - These are teh functions which runs in the middle of teh frontend request and backend received point to do some changes in the request.
+6. Middlewares - These are the functions which runs in the middle of the frontend request and backend received point to do some changes in the request.
 
   - express.json() middleware manipulated the body -> The body in form of binary data was converted back to the json. 
 
