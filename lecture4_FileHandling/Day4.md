@@ -39,3 +39,8 @@ console.log(200);
 => since both sync and async functions of write does not return anything hence result stores undefined.
 
 8. Event Cycle => event queue, event loop,thread and workers, req are of 2 types - blocking and non blocking
+              - workers perform task and functions requested by API request
+
+9. memory distribution phase => memory created functions are executed , like creating vars
+10. code excution phase - statements are executed in code execution phase.
+  The js code will run 2 times - MDP and second time for CEP
