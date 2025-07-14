@@ -13,5 +13,5 @@
 10. Term	        Meaning
     localhost	    A special name for your own computer
     Mapped to	    IP address 127.0.0.1 (loopback address)
-    Used for	T   esting servers locally, development, etc.
+    Used for	    Testing servers locally, development, etc.
     Mapping file	/etc/hosts or C:\Windows\System32\drivers\etc\hosts
