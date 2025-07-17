@@ -7,20 +7,17 @@ const User = require("./models/User.schema")
 const bulkUserUpload = require("./db/seed")
 require("dotenv").config();
 
+//routers
+const userRouter = require("./routes/user.routes")
+
 
 // Use express.json() when you're expecting JSON data (from APIs, mobile apps, etc.).
 // Use express.urlencoded() when handling HTML form submissions.
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get("/user/bulk/upload", async(req,res) => {
-  try{
-    await bulkUserUpload();
-    res.status(200).json({message : "users uploaded successfully"})
-  }catch(error){
-    res.status(500).json({message : error.message})
-  }
-})
+//path specific middleware
+app.use("/user",userRouter)
 
 app.post("/user/create",async(req,res) => { 
   try{
