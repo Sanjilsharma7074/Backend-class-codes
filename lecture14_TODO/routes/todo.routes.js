@@ -7,9 +7,10 @@ router.get("/all", async (req, res) => {
     let todos = await Todo.find();
     res.status(200).json({ todos });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
+
 router.post("/create", async (req, res) => {
   try {
     const { task } = req.body;
@@ -21,36 +22,29 @@ router.post("/create", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-router.delete("/clear", async (req, res) => {
-  try {
-    // const todos = getAllTodos();
-    console.log("Delete/clear called");
-    await Todo.deleteMany({status:true});
-    res.status(200).json({ message: "Deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+
 router.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
     await Todo.findByIdAndDelete(id);
-    res.status(200).json({ message: "Deleted successfully" });
+    res.status(200).json({ message: "todo deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 });
+
 router.put("/update/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const todo = await Todo.findById(id);
-    todo.status = !todo.status; //status ka not
-    await todo.save(); //saves the updated field to mongoose
-    res.status(200).json({ message: "Todo updated successfully" });
+    todo.status = !todo.status;
+    await todo.save();
+    res.status(200).json({ message: "Todo updated successfuly" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
 router.get("/filter", async (req, res) => {
   try {
     const { filterName } = req.query;
@@ -64,9 +58,20 @@ router.get("/filter", async (req, res) => {
     const todos = await Todo.find({
       status: filterName == "active" ? false : true,
     });
-    res.status(200).json({ todos });
+    return res.status(200).json({ todos });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
+// DELETE all completed todos
+router.delete("/clear-completed", async (req, res) => {
+  try {
+    await Todo.deleteMany({ status: true }); // remove all todos where status = true
+    res.status(200).json({ message: "All completed todos cleared" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
