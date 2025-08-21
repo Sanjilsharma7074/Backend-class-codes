@@ -1,7 +1,10 @@
 const express = require("express");
+const User = require("../models/user.model");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const User = require("../models/user.model");
+const jwt = require("jsonwebtoken");
+const { pluralize } = require("mongoose");
+const verifyAuth = require("../middleware/auth.middleware");
 
 router.post("/signup", async (req, res) => {
   try {
@@ -10,6 +13,7 @@ router.post("/signup", async (req, res) => {
       throw new Error("All fields are required");
     }
     const hashPass = await bcrypt.hash(password, 10);
+
     const user = await User.create({
       name: name,
       email: email,
@@ -25,17 +29,41 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      throw new Error("All fields are required");
+      throw new Error("all fields are required");
     }
     const user = await User.findOne({ email: email }).select("+password");
     if (!user) {
-      throw new error("invalid email");
+      throw new Error("Invalid email or password");
     }
     const isMatched = await bcrypt.compare(password, user.password);
     if (!isMatched) {
-      throw new Error("Invalid password");
+      throw new Error("Invalid email or password");
     }
-    res.status(200).json({ message: "You are logged in successfully" });
+    const token = jwt.sign(
+      { id: user._id, name: user.name },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h", algorithm: "HS256" }
+    );
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 24 * 3600 * 1000,
+    });
+    res.status(200).json({ message: "You are logged in"});
+    // res.status(200).json({ message: "You are logged in", token: token });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.get("/check", verifyAuth, async (req, res) => {
+  try {
+    // const authorization = req.headers.authorization;
+    // const token  = authorization.split(" ")[1];
+    // const payload = jwt.verify(token,process.env.JWT_SECRET);
+    // res.send("hello");
+    const userData = req.user;
+    res.status(200).json({ user: userData });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
